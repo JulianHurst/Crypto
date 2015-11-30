@@ -1,0 +1,17 @@
+Received: from 31.121.118.45 (EHLO serveur.fr)
+  by mta1007.mail.ukl.yahoo.com with SMTP; Fri, 21 Sep 2012 21:31:16 +0000
+Received: by serveur.fr (Postfix, from userid 106)
+  id 3DF2F15A0CD; Fri, 21 Sep 2012 23:31:16 +0200 (CEST)
+From: "Thomas Moore" <president@serveur.fr>
+To: david.pigeon@yahoo.fr
+Subject: Transfert d'argent confidentiel
+Date: Fri, 21 Sep 2012 23:31:16 +0200
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+X-Mailer: Mozilla Thunderbird
+Message-Id: <20120921212116.3DF2F16A0CD@serveur.fr>
+
+Bonjour David,
+Tiens-moi au courant dès que l'argent aura été versé.
+Thomas
