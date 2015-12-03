@@ -36,6 +36,14 @@ void affiche_la_clef(uchar *clef, int longueur)
   printf("\n");
 }
 
+void affiche_la_clef2(uchar **clef,int longueur){
+	int i,j;
+	for(i=0;i<longueur;i++)
+		for(j=0;j<4;j++)
+			printf ("%02X ", clef[i][j] & 255);
+	printf("\n");
+}
+
 uchar *RotWord(uchar *tmp){
 	int i;
 	uchar a0=tmp[0];
@@ -52,6 +60,36 @@ uchar *SubWord(uchar *tmp){
 	return tmp;
 }	
 
+void calcule_la_clef_etendue2(uchar *K[4], int long_K, uchar *W[4], int long_W, int Nr, int Nk)
+{
+  int i,j;
+  uchar *tmp;
+  tmp=(uchar*)malloc(sizeof(uchar)*4);
+  for(i=0; i<long_W; i++)
+	for(j=0;j<4;j++)
+		W[i][j] = 0;
+  for(i=0;i<Nk;i++)
+	for(j=0;j<4;j++)
+		W[i][j]=K[i][j];
+  for(i=Nk;i<4*(Nr+1);i++){
+	  for(j=0;j<4;j++)
+		tmp[j]=W[i-1][j];
+	if(i%Nk==0){
+		tmp=RotWord(tmp);
+		tmp=SubWord(tmp);
+		for(j=0;j<4;j++)
+			tmp[j]=tmp[j]^Rcon[i/Nk];		
+	}
+	else if(Nk>6 && i%Nk==4)
+		tmp=SubWord(tmp);
+	for(j=0;j<4;j++){
+		tmp[j]=W[i-Nk][j]^tmp[j];
+		W[i][j]=tmp[j];
+	}
+  }
+	return ;	 
+}
+
 void calcule_la_clef_etendue(uchar *K, int long_K, uchar *W, int long_W, int Nr, int Nk)
 {
   int i,j;
@@ -60,7 +98,7 @@ void calcule_la_clef_etendue(uchar *K, int long_K, uchar *W, int long_W, int Nr,
     W[i] = 0;
   for(i=0;i<Nk;i++)
 	W[i]=K[i];
-  for(i=Nk;i<4*(Nr+1);i++){
+  /*for(i=Nk;i<4*(Nr+1);i++){
 	tmp[i]=W[i-1];
 	if(i%Nk==0){
 		tmp=RotWord(tmp);
@@ -72,13 +110,13 @@ void calcule_la_clef_etendue(uchar *K, int long_K, uchar *W, int long_W, int Nr,
 	tmp=W[i-Nk]^tmp;
 	W[i]=tmp;
   }
-	return ;	 
+	return ;*/	 
 }
 
 int main (int argc, char * argv[])
 {
   uchar K[32]={0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	       0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // La longueur max. de la clef courte est 32(4*max Nk) octets
+	       0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // La longueur max. de la clef courte est 32(4*max Nk) octets  
   int long_de_la_clef = 16 ;
   uchar W[240];   // La longueur max. de la clef étendue est (14+1)*16=240 octets
   int Nr, Nk;
@@ -86,10 +124,21 @@ int main (int argc, char * argv[])
   else if (long_de_la_clef == 24){ Nr = 12; Nk = 6; }
        else { Nr = 14; Nk = 8; }
   int long_de_la_clef_etendue = 4*(4*(Nr+1));
-	printf("S : %02X %02X\n",SBox[0x62],K[32]);
+  int long_de_la_clef_etendue2 = 4*(Nr+1);
+  uchar k[Nk][4];
+  uchar w[4*(Nr+1)][4];
+  for(int i=0;i<Nk;i++)
+	for(int j=0;j<4;j++){
+		k[i][j]=K[(i*4)+j];
+		printf("S : %02X %d\n",k[i][j],(i*4)+j);
+	}
+	//printf("S : %02X %02X\n",SBox[0x62],K[32]);
+	
+	
   //calcule_la_clef_etendue(K, long_de_la_clef, W, long_de_la_clef_etendue, Nr, Nk);  
+  calcule_la_clef_etendue2(k, long_de_la_clef, w, long_de_la_clef_etendue2, Nr, Nk);  
 
-  affiche_la_clef(W, long_de_la_clef_etendue);
+  affiche_la_clef2(w, long_de_la_clef_etendue2);
   exit(EXIT_SUCCESS);
 }
 
