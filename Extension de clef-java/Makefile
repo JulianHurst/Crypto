@@ -1,6 +1,6 @@
 all: compiler
 compiler: 
-	gcc diversification.c -o diversification -std=c99
+	gcc -g diversification.c -o diversification -std=c99
 clean: 
 	rm diversification
 
