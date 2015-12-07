@@ -4496,8 +4496,6 @@ void permuter(int i,int j){
 }
 
 void ShiftRows(){
-  uchar lasttmp;
-  uchar tmp;
   for(int i=1;i<4;i++){
     for(int j=0;j<i;j++){
       permuter(i,4*3+i);
@@ -4508,8 +4506,6 @@ void ShiftRows(){
 }
 
 void Inv_ShiftRows(){
-  uchar lasttmp;
-  uchar tmp;
   for(int i=1;i<4;i++){
     for(int j=0;j<i;j++){
       permuter(4*3+i,i);
