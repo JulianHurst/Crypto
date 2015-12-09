@@ -1,0 +1,2 @@
+**epp** permet de calculer des nombres premiers très grands (représentés par des entiers GMP en C) grâce au test de primalité de Miller-Rabin. Le programme final calcule la proportion de nombres premiers parmi 10^6 tirages ainsi que le nombre moyen de tentatives nécessaires pour trouver un nombre premier de 1024 bits.
+Il ne prend aucun argument et affiche les résultats directement sur la sortie standard.
